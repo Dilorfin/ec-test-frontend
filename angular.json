@@ -10,6 +10,18 @@
 					"style": "scss"
 				}
 			},
+			"i18n": {
+				"sourceLocale": "en",
+				"locales": {
+					"uk": {
+						"translation": "src/locale/messages.uk.json",
+						"baseHref": "/"
+					},
+					"ru": {
+						"translation": "src/locale/messages.ru.json"
+					}
+				}
+			},
 			"root": "",
 			"sourceRoot": "src",
 			"prefix": "app",
@@ -32,7 +44,9 @@
 						"styles": [
 							"src/styles.scss"
 						],
-						"scripts": []
+						"scripts": [],
+						"localize": true,
+						"i18nMissingTranslation": "warning"
 					},
 					"configurations": {
 						"production": {
@@ -62,7 +76,8 @@
 							"vendorChunk": true,
 							"extractLicenses": false,
 							"sourceMap": true,
-							"namedChunks": true
+							"namedChunks": true,
+							"localize": false
 						}
 					},
 					"defaultConfiguration": "production"
@@ -82,7 +97,9 @@
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
-						"browserTarget": "e-commerce-test:build"
+						"browserTarget": "e-commerce-test:build",
+						"outputPath": "src/locale",
+						"format": "json"
 					}
 				},
 				"test": {
