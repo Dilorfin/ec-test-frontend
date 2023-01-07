@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceTest.DAL", "EComme
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ECommerceTest.ThirdParty", "ECommerceTest.ThirdParty", "{C604ED99-3135-4C26-8933-5C90BB135632}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceTest.ThirdParty.Payment", "ECommerceTest.ThirdParty.Payment\ECommerceTest.ThirdParty.Payment.csproj", "{6729CF9B-C625-42A1-B0A6-1CA37AB97AC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceTest.ThirdParty.Payment", "ECommerceTest.ThirdParty.Payment\ECommerceTest.ThirdParty.Payment.csproj", "{6729CF9B-C625-42A1-B0A6-1CA37AB97AC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
