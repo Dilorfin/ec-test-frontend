@@ -1,4 +1,7 @@
 using AutoMapper;
+using ECommerceTest.DAL;
+using ECommerceTest.DAL.DTOs;
+using ECommerceTest.Models;
 using ECommerceTest.ThirdParty.Payment;
 using ECommerceTest.ThirdParty.Payment.Monobank;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
@@ -17,8 +20,12 @@ namespace ECommerceTest
 			});*/
 			
 			builder.Services.AddSingleton<IPaymentService, MonobankPaymentService>();
+
+			builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+
 			var mapperConfig = new MapperConfiguration(cfg =>
 			{
+				cfg.CreateMap<ProductListDTO, ProductListModel>(); 
 				// you can have the maps in a dedicated Profile subclass if you like
 			});
 			builder.Services.AddSingleton(mapperConfig.CreateMapper());
