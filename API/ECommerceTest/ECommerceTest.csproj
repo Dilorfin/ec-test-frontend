@@ -10,6 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ECommerceTest.DAL\ECommerceTest.DAL.csproj" />
+    <ProjectReference Include="..\ECommerceTest.ThirdParty.Payment\ECommerceTest.ThirdParty.Payment.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

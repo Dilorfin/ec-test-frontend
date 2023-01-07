@@ -5,7 +5,11 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceTest", "ECommerceTest\ECommerceTest.csproj", "{64EAC33D-1B50-461F-8536-0A1800A4A4D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceTest.DAL", "ECommerceTest.DAL\ECommerceTest.DAL.csproj", "{77F31704-5A3A-48B9-8AE3-3C7781AC3236}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceTest.DAL", "ECommerceTest.DAL\ECommerceTest.DAL.csproj", "{77F31704-5A3A-48B9-8AE3-3C7781AC3236}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ECommerceTest.ThirdParty", "ECommerceTest.ThirdParty", "{C604ED99-3135-4C26-8933-5C90BB135632}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceTest.ThirdParty.Payment", "ECommerceTest.ThirdParty.Payment\ECommerceTest.ThirdParty.Payment.csproj", "{6729CF9B-C625-42A1-B0A6-1CA37AB97AC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +25,16 @@ Global
 		{77F31704-5A3A-48B9-8AE3-3C7781AC3236}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77F31704-5A3A-48B9-8AE3-3C7781AC3236}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77F31704-5A3A-48B9-8AE3-3C7781AC3236}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6729CF9B-C625-42A1-B0A6-1CA37AB97AC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6729CF9B-C625-42A1-B0A6-1CA37AB97AC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6729CF9B-C625-42A1-B0A6-1CA37AB97AC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6729CF9B-C625-42A1-B0A6-1CA37AB97AC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6729CF9B-C625-42A1-B0A6-1CA37AB97AC3} = {C604ED99-3135-4C26-8933-5C90BB135632}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5564F332-FCA0-4C6B-994C-6615422C22EF}

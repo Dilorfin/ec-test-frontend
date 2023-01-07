@@ -1,4 +1,5 @@
-using ECommerceTest.DAL;
+using ECommerceTest.ThirdParty.Payment;
+using ECommerceTest.ThirdParty.Payment.Monobank;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,13 +11,11 @@ namespace ECommerceTest
 	{
 		public override void Configure(IFunctionsHostBuilder builder)
 		{
-			//builder.Services.AddHttpClient();
-
 			/*builder.Services.AddSingleton<IMyService>((s) => {
 				return new MyService();
 			});*/
-
-			builder.Services.AddSingleton<IServiceTest, ServiceTest>();
+			
+			builder.Services.AddSingleton<IPaymentService, MonobankPaymentService>();
 		}
 	}
 }
