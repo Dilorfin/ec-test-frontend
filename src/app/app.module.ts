@@ -7,6 +7,8 @@ import { ProductDetailedComponent } from './product-detailed/product-detailed.co
 import { MainPageComponent } from './main-page/main-page.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 @NgModule({
 	declarations: [
@@ -14,7 +16,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 		ProductDetailedComponent,
 		MainPageComponent,
 		ProductsListComponent,
-		NotFoundComponent
+		NotFoundComponent,
+		AboutUsComponent,
+		ShoppingCartComponent
 	],
 	imports: [
 		BrowserModule,
