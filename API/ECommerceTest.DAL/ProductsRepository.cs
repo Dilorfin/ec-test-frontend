@@ -20,14 +20,27 @@ public class ProductsRepository : IProductsRepository
 			.GetContainer(container);
 	}
 
-	public async Task<IEnumerable<ProductListDTO>> GetProductsAsync(uint offset, uint count)
+	public async Task<ProductDTO> GetProductAsync(string id)
 	{
-		var iterator = _container.GetItemLinqQueryable<ProductListDTO>()
+		string query = $@"SELECT * FROM products WHERE products.id = '{id}'";
+		var iterator = _container.GetItemQueryIterator<ProductDTO>(query);
+		var matches = new List<ProductDTO>();
+		while (iterator.HasMoreResults)
+		{
+			var next = await iterator.ReadNextAsync();
+			matches.AddRange(next);
+		}
+		return matches.SingleOrDefault();
+	}
+
+	public async Task<IEnumerable<ProductDTO>> GetProductsAsync(uint offset, uint count)
+	{
+		var iterator = _container.GetItemLinqQueryable<ProductDTO>()
 		   .Skip((int)offset)
 		   .Take((int)count)
 		   .ToFeedIterator();
 
-		List<ProductListDTO> list = new List<ProductListDTO>();
+		List<ProductDTO> list = new List<ProductDTO>();
 		while (iterator.HasMoreResults)
 		{
 			var next = await iterator.ReadNextAsync();

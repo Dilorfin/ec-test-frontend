@@ -1,4 +1,5 @@
 using AutoMapper;
+using ECommerceTest.Common;
 using ECommerceTest.DAL;
 using ECommerceTest.Models;
 using Microsoft.AspNetCore.Http;
@@ -22,20 +23,34 @@ namespace ECommerceTest.Controllers
 			_productsRepository = productsRepository;
 		}
 
-		[FunctionName("Products")]
-		public async Task<IActionResult> GetProductsList(
-			[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "products/list")] HttpRequest req,
+		[FunctionName("Test")]
+		public async Task<IActionResult> Test(
+			[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "test")] HttpRequest req,
 			ILogger log)
 		{
-			string offset = req.Query["offset"];
-			string count = req.Query["count"];
+			return new OkObjectResult(AzureAuthUtils.GetAzureUserFromRequest(req));
+		}
 
-			/*string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-			dynamic data = JsonConvert.DeserializeObject(requestBody);
-			name = name ?? data?.name;*/
+		[FunctionName("GetProductDetails")]
+		public async Task<IActionResult> GetProductDetails(
+			[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "product/{id}")] HttpRequest req,
+			string id)
+		{
+			var productDTO = await _productsRepository.GetProductAsync(id);
+			var product = _mapper.Map<ProductDetailedModel>(productDTO);
+			return new OkObjectResult(product);
+		}
 
-			var result = _mapper.Map<IEnumerable<ProductListModel>>(await _productsRepository.GetProductsAsync(0, 25));
-			return new OkObjectResult(result);
+		[FunctionName("GetProductsList")]
+		public async Task<IActionResult> GetProductsList(
+			[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "products/list")] HttpRequest req)
+		{
+			//string offset = req.Query["offset"];
+			//string count = req.Query["count"];
+			
+			var productDTOs = await _productsRepository.GetProductsAsync(0, 25);
+			var products = _mapper.Map<IEnumerable<ProductListModel>>(productDTOs);
+			return new OkObjectResult(products);
 		}
 	}
 }

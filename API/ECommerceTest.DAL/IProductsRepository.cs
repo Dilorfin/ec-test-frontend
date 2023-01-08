@@ -4,5 +4,7 @@ namespace ECommerceTest.DAL;
 
 public interface IProductsRepository
 {
-	Task<IEnumerable<ProductListDTO>> GetProductsAsync(uint offset, uint count);
+	Task<ProductDTO> GetProductAsync(string id);
+
+	Task<IEnumerable<ProductDTO>> GetProductsAsync(uint offset, uint count);
 }

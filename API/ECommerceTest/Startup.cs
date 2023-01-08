@@ -25,8 +25,8 @@ namespace ECommerceTest
 
 			var mapperConfig = new MapperConfiguration(cfg =>
 			{
-				cfg.CreateMap<ProductListDTO, ProductListModel>(); 
-				// you can have the maps in a dedicated Profile subclass if you like
+				cfg.CreateMap<ProductDTO, ProductListModel>(); 
+				cfg.CreateMap<ProductDTO, ProductDetailedModel>();
 			});
 			builder.Services.AddSingleton(mapperConfig.CreateMapper());
 		}
