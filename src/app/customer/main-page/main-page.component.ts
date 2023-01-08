@@ -1,13 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { ProductModel, ProductsService } from 'src/app/services/products.service';
 
 @Component({
 	selector: 'app-main-page',
 	templateUrl: './main-page.component.html',
 	styleUrls: ['./main-page.component.scss']
 })
-export class MainPageComponent
+export class MainPageComponent implements OnInit
 {
-	public products: any[] = [
+	public products: ProductModel[] = [];
+
+	constructor(private productsService: ProductsService) { }
+
+	ngOnInit(): void
+	{
+		this.productsService.getList().subscribe({
+			next: (products: ProductModel[]) =>
+			{
+				this.products = products;
+			},
+			error: (error: any) => console.error(error)
+		});
+	}
+
+	/*public products: any[] = [
 		{
 			id: "0",
 			title: "Special Item",
@@ -64,5 +81,6 @@ export class MainPageComponent
 			discountPrice: "",
 			imageUrl: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
 		}
-	];
+	];*/
+
 }
