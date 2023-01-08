@@ -28,7 +28,7 @@ namespace ECommerceTest.Controllers
 			if (websiteUrl == null)
 				return new InternalServerErrorResult();
 
-			var callbackUri = new Uri(new Uri(websiteUrl), "api/Test");
+			var callbackUri = new Uri(new Uri(websiteUrl), "api/PaymentTest");
 			var invoice = await _paymentService.CreateInvoiceAsync(callbackUri, callbackUri);
 			
 			return new OkObjectResult(new
@@ -41,9 +41,9 @@ namespace ECommerceTest.Controllers
 			//return new OkResult();
 		}
 
-		[FunctionName("Test")]
-		public async Task<IActionResult> Test(
-			[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "Test")] HttpRequest req,
+		[FunctionName("PaymentTest")]
+		public async Task<IActionResult> PaymentTest(
+			[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "PaymentTest")] HttpRequest req,
 			ILogger log)
 		{
 			//log.LogInformation($"data: {req.}");
