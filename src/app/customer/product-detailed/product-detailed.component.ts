@@ -34,7 +34,7 @@ export class ProductDetailedComponent
 
 	addToCart()
 	{
-		this.cartService.add(this.productId, {
+		this.cartService.add({
 			amount: this.amount,
 			model: this.product!
 		});

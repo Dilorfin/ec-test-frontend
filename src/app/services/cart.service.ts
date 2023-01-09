@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ProductModel } from './products.service';
 
-//export
-
 export type OrderedProduct = {
 	amount: number;
 	model: ProductModel;
@@ -13,24 +11,75 @@ export type OrderedProduct = {
 })
 export class CartService
 {
-	private products: Map<string, OrderedProduct> = new Map<string, { amount: number, model: ProductModel }>();
-	constructor() { }
+	private readonly localStorageKey: string = "shopping-cart";
 
-	add(id: string, order: OrderedProduct): void
+	private subscribers: ((value: OrderedProduct[]) => void)[] = [];
+	private products: OrderedProduct[] = [];
+
+	constructor()
 	{
-		this.products.set(id, order);
+		const stored = localStorage.getItem(this.localStorageKey);
+		if (stored)
+		{
+			this.products = JSON.parse(stored);
+		}
+		this.subscribe(() =>
+		{
+			localStorage.setItem(this.localStorageKey, JSON.stringify(this.products));
+		});
 	}
-	get(id: string): OrderedProduct | undefined
+
+	public add(order: OrderedProduct): void
+	{
+		this.products.push(order);
+		this.publishEvent();
+	}
+
+	public remove(index: number): void
+	{
+		this.products.splice(index, 1);
+		this.publishEvent();
+	}
+
+	/*public get(id: string): OrderedProduct | undefined
 	{
 		return this.products.get(id);
 	}
-	contains(id: string): boolean
+
+	public contains(id: string): boolean
 	{
 		return this.products.has(id);
-	}
+	}*/
 
-	getAll(): OrderedProduct[]
+	public getAll(): OrderedProduct[]
 	{
 		return [...this.products.values()];
+	}
+
+	public subscribe(next: (value: OrderedProduct[]) => void): number
+	{
+		const oldLength: number = this.subscribers.length;
+		this.subscribers.push(next);
+		return oldLength;
+	}
+	public unsubscribe(index: number): void
+	{
+		this.subscribers.splice(index, 1);
+	}
+
+	private publishEvent(): void
+	{
+		const currentProducts: OrderedProduct[] = this.getAll();
+		this.subscribers.forEach(func =>
+		{
+			try
+			{
+				func(currentProducts);
+			}
+			catch (error)
+			{
+				console.error(error);
+			}
+		});
 	}
 }

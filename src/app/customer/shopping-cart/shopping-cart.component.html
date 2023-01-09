@@ -1,1 +1,36 @@
-<p>shopping-cart works!</p>
+<div class="container px-4 px-lg-5 mt-5">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">Image</th>
+				<th scope="col">Title</th>
+				<th scope="col">Amount</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let product of products; index as i;">
+				<th>
+					<img class="rounded-start cart-image" [src]="product.model.imageUrl" [alt]="product.model.title" />
+				</th>
+				<td>{{product.model.title}}</td>
+				<td>
+					<div class="input-group mb-3">
+						<button class="btn btn-outline-dark" type="button"><i class="bi bi-dash"></i></button>
+						<input class="form-control-dark text-center" [(ngModel)]="product.amount" type="num"
+							style="max-width: 3rem" />
+						<button class="btn btn-outline-dark" type="button"><i class="bi bi-plus"></i></button>
+					</div>
+				</td>
+				<td>
+					<button class="btn btn-outline-dark" (click)="removeFromCart(i)">
+						<i class="bi bi-trash-fill"></i>
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<button class="btn btn-outline-dark w-100 mb-2" [disabled]="products.length <= 0">
+		Checkout
+	</button>
+</div>
