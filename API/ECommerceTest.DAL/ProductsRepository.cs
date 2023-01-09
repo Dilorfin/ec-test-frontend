@@ -1,29 +1,18 @@
 using ECommerceTest.DAL.DTOs;
-using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
 
 namespace ECommerceTest.DAL;
 
-public class ProductsRepository : IProductsRepository
+public class ProductsRepository : Repository, IProductsRepository
 {
-	private readonly Container _container;
-
 	public ProductsRepository()
-	{
-		//string connectionString = ConfigurationManager.ConnectionStrings["DB_CONNECTION_STRING"].ConnectionString;
-		string connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
-		string database = "db";
-		string container = "products";
-
-		_container = new CosmosClient(connectionString)
-			.GetDatabase(database)
-			.GetContainer(container);
-	}
+		: base("db", "products")
+	{ }
 
 	public async Task<ProductDTO> GetProductAsync(string id)
 	{
 		string query = $@"SELECT * FROM products WHERE products.id = '{id}'";
-		var iterator = _container.GetItemQueryIterator<ProductDTO>(query);
+		var iterator = Container.GetItemQueryIterator<ProductDTO>(query);
 		var matches = new List<ProductDTO>();
 		while (iterator.HasMoreResults)
 		{
@@ -35,7 +24,7 @@ public class ProductsRepository : IProductsRepository
 
 	public async Task<IEnumerable<ProductDTO>> GetProductsAsync(uint offset, uint count)
 	{
-		var iterator = _container.GetItemLinqQueryable<ProductDTO>()
+		var iterator = Container.GetItemLinqQueryable<ProductDTO>()
 		   .Skip((int)offset)
 		   .Take((int)count)
 		   .ToFeedIterator();

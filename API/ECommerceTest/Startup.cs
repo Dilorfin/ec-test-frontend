@@ -3,6 +3,7 @@ using ECommerceTest.DAL;
 using ECommerceTest.DAL.DTOs;
 using ECommerceTest.Models;
 using ECommerceTest.ThirdParty.Payment;
+using ECommerceTest.ThirdParty.Payment.DTOs;
 using ECommerceTest.ThirdParty.Payment.Monobank;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,7 @@ namespace ECommerceTest
 
 			var mapperConfig = new MapperConfiguration(cfg =>
 			{
+				cfg.CreateMap<InvoiceDTO, InvoiceModel>(); 
 				cfg.CreateMap<ProductDTO, ProductListModel>(); 
 				cfg.CreateMap<ProductDTO, ProductDetailedModel>();
 			});

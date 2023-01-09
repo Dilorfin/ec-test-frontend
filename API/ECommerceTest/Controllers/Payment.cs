@@ -1,3 +1,4 @@
+using AutoMapper;
 using ECommerceTest.ThirdParty.Payment;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -5,18 +6,24 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Web.Http;
+using ECommerceTest.Models;
+using ECommerceTest.DAL;
+using Newtonsoft.Json;
 
 namespace ECommerceTest.Controllers
 {
 	public class Payment
 	{
+		private readonly IMapper _mapper;
 		private readonly IPaymentService _paymentService;
 
-		public Payment(IPaymentService paymentService)
+		public Payment(IMapper mapper, IPaymentService paymentService)
 		{
 			this._paymentService = paymentService;
+			_mapper = mapper;
 		}
 
 		[FunctionName("PaymentCreateInvoice")]
@@ -29,16 +36,11 @@ namespace ECommerceTest.Controllers
 				return new InternalServerErrorResult();
 
 			var callbackUri = new Uri(new Uri(websiteUrl), "api/PaymentTest");
-			var invoice = await _paymentService.CreateInvoiceAsync(callbackUri, callbackUri);
-			
-			return new OkObjectResult(new
-			{
-				Test = callbackUri.ToString(),
-				Invoice = invoice
-			});
-			
-			//log.LogInformation(callbackUri.ToString());
-			//return new OkResult();
+
+			var invoiceDTO = await _paymentService.CreateInvoiceAsync(callbackUri, callbackUri);
+			var invoice = _mapper.Map<InvoiceModel>(invoiceDTO);
+
+			return new OkObjectResult(invoice);
 		}
 
 		[FunctionName("PaymentTest")]
@@ -46,8 +48,16 @@ namespace ECommerceTest.Controllers
 			[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "PaymentTest")] HttpRequest req,
 			ILogger log)
 		{
-			//log.LogInformation($"data: {req.}");
+			string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
+			var logRepo = new LogTest();
+			
+			logRepo.Log(JsonConvert.SerializeObject(new
+			{
+				Query = req.Query,
+				RequestBody = requestBody
+			}));
+			
 			/*var invoice = await _paymentService.CreateInvoiceAsync();
 			if (invoice == null)
 				return new InternalServerErrorResult();
