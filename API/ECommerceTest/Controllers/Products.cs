@@ -1,6 +1,6 @@
 using AutoMapper;
 using ECommerceTest.Common;
-using ECommerceTest.DAL;
+using ECommerceTest.DAL.IRepositories;
 using ECommerceTest.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

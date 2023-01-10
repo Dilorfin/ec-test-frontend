@@ -1,6 +1,6 @@
 using ECommerceTest.DAL.DTOs;
 
-namespace ECommerceTest.DAL;
+namespace ECommerceTest.DAL.IRepositories;
 
 public interface IProductsRepository
 {

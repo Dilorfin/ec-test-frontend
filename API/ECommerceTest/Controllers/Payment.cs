@@ -1,17 +1,14 @@
 using AutoMapper;
+using ECommerceTest.DAL.Repositories;
 using ECommerceTest.ThirdParty.Payment;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
-using System;
+using Newtonsoft.Json;
 using System.IO;
 using System.Threading.Tasks;
-using System.Web.Http;
-using ECommerceTest.Models;
-using ECommerceTest.DAL;
-using Newtonsoft.Json;
 
 namespace ECommerceTest.Controllers
 {
@@ -26,26 +23,28 @@ namespace ECommerceTest.Controllers
 			_mapper = mapper;
 		}
 
-		[FunctionName("PaymentCreateInvoice")]
+		/*[FunctionName("PaymentCreateInvoice")]
 		public async Task<IActionResult> CreateInvoice(
-			[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "payment/invoice/create")] HttpRequest req,
+			[HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "payment/invoice/create")] HttpRequest req,
 			ILogger log)
 		{
 			var websiteUrl = Environment.GetEnvironmentVariable("SITE_BASE_URL");
 			if (websiteUrl == null)
 				return new InternalServerErrorResult();
 
-			var callbackUri = new Uri(new Uri(websiteUrl), "api/PaymentTest");
+			string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+			var order = JsonConvert.DeserializeObject<OrderModel>(requestBody);
 
+			var callbackUri = new Uri(new Uri(websiteUrl), "api/PaymentTest");
 			var invoiceDTO = await _paymentService.CreateInvoiceAsync(callbackUri, callbackUri);
-			var invoice = _mapper.Map<InvoiceModel>(invoiceDTO);
+			var invoice = _mapper.Map<InvoiceResultModel>(invoiceDTO);
 
 			return new OkObjectResult(invoice);
-		}
+		}*/
 
 		[FunctionName("PaymentTest")]
 		public async Task<IActionResult> PaymentTest(
-			[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "PaymentTest")] HttpRequest req,
+			[HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "payment/set-status")] HttpRequest req,
 			ILogger log)
 		{
 			string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
@@ -57,12 +56,6 @@ namespace ECommerceTest.Controllers
 				Query = req.Query,
 				RequestBody = requestBody
 			}));
-			
-			/*var invoice = await _paymentService.CreateInvoiceAsync();
-			if (invoice == null)
-				return new InternalServerErrorResult();
-			return new OkObjectResult(invoice);*/
-			//var callbackUri = new Uri(new Uri($"{req.Scheme}://{req.Host.Value}"), "/Test");
 			
 			return new OkResult();
 		}

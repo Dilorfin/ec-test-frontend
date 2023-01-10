@@ -40,7 +40,11 @@ export class CartService
 		this.products.splice(index, 1);
 		this.publishEvent();
 	}
-
+	public clear(): void
+	{
+		this.products = [];
+		this.publishEvent();
+	}
 	/*public get(id: string): OrderedProduct | undefined
 	{
 		return this.products.get(id);

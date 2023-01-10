@@ -1,6 +1,6 @@
 using Microsoft.Azure.Cosmos;
 
-namespace ECommerceTest.DAL;
+namespace ECommerceTest.DAL.Repositories;
 
 public class LogTest : Repository
 {

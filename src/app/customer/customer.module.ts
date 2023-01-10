@@ -14,6 +14,7 @@ import { WishlistComponent } from './wishlist/wishlist.component';
 import { CustomerComponent } from './customer.component';
 import { ProductsService } from '../services/products.service';
 import { CartService } from '../services/cart.service';
+import { OrderService } from '../services/order.service';
 
 @NgModule({
 	declarations: [
@@ -34,6 +35,7 @@ import { CartService } from '../services/cart.service';
 	],
 	providers: [
 		CartService,
+		OrderService,
 		ProductsService
 	],
 	bootstrap: [CustomerComponent]

@@ -4,5 +4,5 @@ namespace ECommerceTest.ThirdParty.Payment;
 
 public interface IPaymentService
 {
-	Task<InvoiceDTO> CreateInvoiceAsync(Uri redirectUri, Uri callbackUri);
+	Task<InvoiceResultDTO> CreateInvoiceAsync(InvoiceCreateDTO invoiceCreateDTO);
 }

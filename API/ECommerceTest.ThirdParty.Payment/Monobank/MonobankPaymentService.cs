@@ -13,16 +13,22 @@ public class MonobankPaymentService : IPaymentService
 
 	internal record MonobankErrorResponse(string errCode, string errText);
 
-	public async Task<InvoiceDTO> CreateInvoiceAsync(Uri redirectUri, Uri callbackUri)
+	public async Task<InvoiceResultDTO> CreateInvoiceAsync(InvoiceCreateDTO invoiceCreateDTO)
 	{
 		using HttpClient client = new();
 
 		client.DefaultRequestHeaders.Add("X-Token", Environment.GetEnvironmentVariable("MONOBANK_TOKEN"));
 
+		var baseUrlStr = Environment.GetEnvironmentVariable("SITE_BASE_URL");
+		var invoiceCallbackStr = Environment.GetEnvironmentVariable("INVOICE_CALLBACK");
+		var invoiceRedirectStr = Environment.GetEnvironmentVariable("INVOICE_REDIRECT");
+		var invoiceCallback = new Uri(baseUrlStr + invoiceCallbackStr);
+		var invoiceRedirect= new Uri(baseUrlStr + invoiceRedirectStr);
+		
 		var model = MoqModel() with
 		{
-			WebHookUrl = callbackUri.ToString(),
-			RedirectUrl = redirectUri.ToString()
+			WebHookUrl = invoiceCallback.ToString(),
+			RedirectUrl = invoiceRedirect.ToString()
 		};
 		string pJsonContent = JsonConvert.SerializeObject(model);
 
@@ -41,7 +47,7 @@ public class MonobankPaymentService : IPaymentService
 		}
 
 		var monoInvoice = JsonConvert.DeserializeObject<MonobankInvoiceModel>(responseBody);
-		return new InvoiceDTO(monoInvoice.invoiceId, monoInvoice.pageUrl);
+		return new InvoiceResultDTO(monoInvoice.invoiceId, monoInvoice.pageUrl);
 	}
 
 	private static MonobankCreateInvoiceModel MoqModel()

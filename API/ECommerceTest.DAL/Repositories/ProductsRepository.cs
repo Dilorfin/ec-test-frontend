@@ -1,7 +1,8 @@
 using ECommerceTest.DAL.DTOs;
+using ECommerceTest.DAL.IRepositories;
 using Microsoft.Azure.Cosmos.Linq;
 
-namespace ECommerceTest.DAL;
+namespace ECommerceTest.DAL.Repositories;
 
 public class ProductsRepository : Repository, IProductsRepository
 {

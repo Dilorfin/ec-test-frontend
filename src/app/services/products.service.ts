@@ -16,11 +16,11 @@ export class ProductsService
 {
 	constructor(private http: HttpClient) { }
 
-	getList() : Observable<ProductModel[]>
+	public getList() : Observable<ProductModel[]>
 	{
 		return this.http.get<ProductModel[]>("/api/products/list");
 	}
-	getDetailed(id:string) : Observable<ProductModel>
+	public getDetailed(id:string) : Observable<ProductModel>
 	{
 		return this.http.get<ProductModel>("/api/product/" + id);
 	}

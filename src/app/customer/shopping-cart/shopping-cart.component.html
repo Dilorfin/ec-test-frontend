@@ -30,7 +30,7 @@
 			</tr>
 		</tbody>
 	</table>
-	<button class="btn btn-outline-dark w-100 mb-2" [disabled]="products.length <= 0">
+	<button class="btn btn-outline-dark w-100 mb-2" (click)="checkout()" [disabled]="products.length <= 0">
 		Checkout
 	</button>
 </div>
