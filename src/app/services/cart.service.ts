@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ProductModel } from './products.service';
+import { ProductModel } from './backend-models/product.model';
 
 export type OrderedProduct = {
 	amount: number;
@@ -45,15 +45,6 @@ export class CartService
 		this.products = [];
 		this.publishEvent();
 	}
-	/*public get(id: string): OrderedProduct | undefined
-	{
-		return this.products.get(id);
-	}
-
-	public contains(id: string): boolean
-	{
-		return this.products.has(id);
-	}*/
 
 	public getAll(): OrderedProduct[]
 	{

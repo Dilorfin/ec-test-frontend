@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ProductModel } from 'src/app/services/backend-models/product.model';
 import { CartService } from 'src/app/services/cart.service';
-import { ProductModel, ProductsService } from 'src/app/services/products.service';
+import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
 	selector: 'app-product-detailed',

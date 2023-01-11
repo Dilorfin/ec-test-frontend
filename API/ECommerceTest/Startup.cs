@@ -5,6 +5,7 @@ using ECommerceTest.DAL.IRepositories;
 using ECommerceTest.DAL.Repositories;
 using ECommerceTest.Models;
 using ECommerceTest.Models.Order;
+using ECommerceTest.Models.Product;
 using ECommerceTest.ThirdParty.Payment;
 using ECommerceTest.ThirdParty.Payment.DTOs;
 using ECommerceTest.ThirdParty.Payment.Monobank;

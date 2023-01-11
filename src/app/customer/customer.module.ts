@@ -15,6 +15,9 @@ import { CustomerComponent } from './customer.component';
 import { ProductsService } from '../services/products.service';
 import { CartService } from '../services/cart.service';
 import { OrderService } from '../services/order.service';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { OrderInfoComponent } from './order-info/order-info.component';
+import { OrderListComponent } from './order-list/order-list.component';
 
 @NgModule({
 	declarations: [
@@ -25,7 +28,10 @@ import { OrderService } from '../services/order.service';
 		AboutUsComponent,
 		ShoppingCartComponent,
 		WishlistComponent,
-		CustomerComponent
+		CustomerComponent,
+		CheckoutComponent,
+		OrderInfoComponent,
+		OrderListComponent
 	],
 	imports: [
 		CommonModule,

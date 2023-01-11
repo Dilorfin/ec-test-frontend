@@ -7,5 +7,5 @@ public record ProductDTO(
 	[JsonProperty("title")] string Title,
 	[JsonProperty("description")] string Description,
 	[JsonProperty("imageUrl")] string ImageUrl,
-	[JsonProperty("price")] string Price
+	[JsonProperty("price")] long Price
 );

@@ -1,7 +1,7 @@
 using AutoMapper;
 using ECommerceTest.Common;
 using ECommerceTest.DAL.IRepositories;
-using ECommerceTest.Models;
+using ECommerceTest.Models.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
