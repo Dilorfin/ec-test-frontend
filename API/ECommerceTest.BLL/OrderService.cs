@@ -1,5 +1,6 @@
 using ECommerceTest.DAL.DTOs;
 using ECommerceTest.DAL.IRepositories;
+using ECommerceTest.ThirdParty.Delivery;
 using ECommerceTest.ThirdParty.Payment;
 using ECommerceTest.ThirdParty.Payment.DTOs;
 
@@ -18,7 +19,8 @@ public class OrderService : IOrderService
 
 	public async Task<bool> ValidateOrder(OrderCreateDTO order)
 	{
-		return true;
+		var deliveryService = CreateDeliveryService(order.delivery);
+		return await deliveryService.ValidateOrderDelivery(order.delivery);
 	}
 
 	public async Task<OrderCreateResultDTO> CreateOrder(OrderCreateDTO order)
@@ -41,5 +43,15 @@ public class OrderService : IOrderService
 		}
 
 		return new OrderCreateResultDTO(orderId, invoice);
+	}
+
+	private IDeliveryService CreateDeliveryService(OrderDeliveryDTO deliveryDTO)
+	{
+		if (deliveryDTO.type == OrderDeliveryType.NovaPoshta)
+		{
+			return new NovaposhtaDeliveryService();
+		}
+
+		return null;
 	}
 }

@@ -3,12 +3,11 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ECommerceTest.DAL\ECommerceTest.DAL.csproj" />
-    <ProjectReference Include="..\ECommerceTest.ThirdParty.NovaposhtaDelivery\ECommerceTest.ThirdParty.Delivery.csproj" />
   </ItemGroup>
 
 </Project>

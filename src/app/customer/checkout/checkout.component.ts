@@ -118,5 +118,6 @@ export class CheckoutComponent
 	public novaposhtaChooseWarehouse(warehouse: NovaposhtaWarehouse)
 	{
 		this.novaposhtaWarehouse = warehouse;
+		this.order.delivery.destination = this.novaposhtaWarehouse.WarehouseIndex;
 	}
 }

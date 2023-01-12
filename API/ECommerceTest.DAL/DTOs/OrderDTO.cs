@@ -5,7 +5,7 @@ public enum OrderDeliveryType { Pickup, NovaPoshta, UkrPoshta }
 
 public record OrderPaymentDTO(OrderPaymentType type);
 
-public record OrderDeliveryDTO(OrderDeliveryType type);
+public record OrderDeliveryDTO(OrderDeliveryType type, string destination);
 public record OrderProductDTO(Guid id, uint amount);
 
 public record OrderDTO(

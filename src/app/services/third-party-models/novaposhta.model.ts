@@ -3,7 +3,7 @@ export type NovaposhtaResponse<TData> = {
 	data: TData[],
 	errors: string[],
 	warnings: string[],
-	info: string[],
+	info: any,
 	messageCodes: number[],
 	errorCodes: number[],
 	warningCodes: number[],
