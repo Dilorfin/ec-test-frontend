@@ -2,7 +2,10 @@ export enum OrderPaymentType { Cash, Card };
 export enum OrderDeliveryType { Pickup, NovaPoshta, UkrPoshta };
 
 export type OrderPaymentModel = { type: OrderPaymentType };
-export type OrderDeliveryModel = { type: OrderDeliveryType };
+export type OrderDeliveryModel = {
+	type: OrderDeliveryType,
+	destination?: string
+};
 
 export type OrderProductModel = {
 	id: string,

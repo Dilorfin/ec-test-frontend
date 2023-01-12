@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { OrderModel, OrderProductModel, OrderPaymentType, OrderDeliveryType } from 'src/app/services/backend-models/order.model';
 
 import { CartService, OrderedProduct } from 'src/app/services/cart.service';
+import { NovaposhtaService } from 'src/app/services/novaposhta.service';
 import { OrderService } from 'src/app/services/order.service';
+import { NovaposhtaWarehouse } from 'src/app/services/third-party-models/novaposhta.model';
 
 @Component({
 	selector: 'app-checkout',
@@ -13,18 +15,23 @@ export class CheckoutComponent
 {
 	public readonly OrderPaymentType = OrderPaymentType;
 	public readonly OrderDeliveryType = OrderDeliveryType;
-	
+
 	public products: OrderedProduct[];
 	public order: OrderModel;
-	
-	constructor(private cartService: CartService, private orderService: OrderService)
+	public total: number;
+
+	public novaposhtaWarehouses: NovaposhtaWarehouse[] = [];
+	public novaposhtaWarehouse?: NovaposhtaWarehouse;
+
+	constructor(private cartService: CartService, private orderService: OrderService,
+		private novaposhtaService: NovaposhtaService)
 	{
-		// TODO: check if it's working on returning to page
 		this.products = this.cartService.getAll();
 
+		this.total = this.products.map((product) => product.amount * product.model.price).reduce((a, b) => a + b);
 		this.order = {
 			delivery: {
-				type: OrderDeliveryType.Pickup
+				type: OrderDeliveryType.Pickup,
 			},
 			payment: {
 				type: OrderPaymentType.Card
@@ -47,9 +54,18 @@ export class CheckoutComponent
 	public chooseDeliveryType(deliveryType: OrderDeliveryType)
 	{
 		this.order.delivery.type = deliveryType;
+
+		if(this.order.delivery.type == OrderDeliveryType.NovaPoshta && this.novaposhtaWarehouse)
+		{
+			this.order.delivery.destination = this.novaposhtaWarehouse.WarehouseIndex;
+		}
+		else
+		{
+			this.order.delivery.destination = undefined;
+		}
 	}
 
-	public checkout()
+	public placeOrder()
 	{
 		this.orderService.placeOrder(this.order).subscribe({
 			next: res =>
@@ -66,5 +82,31 @@ export class CheckoutComponent
 				console.error(error);
 			}
 		});
+	}
+
+	public novaposhtaSearchForWarehouse(event: Event)
+	{
+		const inputValue = (event.target as HTMLInputElement).value;
+
+		if (!inputValue || inputValue.length < 3)
+		{
+			this.novaposhtaWarehouses = [];
+			return;
+		}
+
+		this.novaposhtaService.getWarehouses(inputValue).subscribe({
+			next: value =>
+			{
+				if (value.errors && value.errors.length > 0)
+				{
+					console.error(value.errors);
+				}
+				this.novaposhtaWarehouses = value.data;
+			}
+		})
+	}
+	public novaposhtaChooseWarehouse(warehouse: NovaposhtaWarehouse)
+	{
+		this.novaposhtaWarehouse = warehouse;
 	}
 }

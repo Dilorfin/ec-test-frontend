@@ -18,6 +18,7 @@ import { OrderService } from '../services/order.service';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { OrderInfoComponent } from './order-info/order-info.component';
 import { OrderListComponent } from './order-list/order-list.component';
+import { NovaposhtaService } from '../services/novaposhta.service';
 
 @NgModule({
 	declarations: [
@@ -42,7 +43,8 @@ import { OrderListComponent } from './order-list/order-list.component';
 	providers: [
 		CartService,
 		OrderService,
-		ProductsService
+		ProductsService,
+		NovaposhtaService
 	],
 	bootstrap: [CustomerComponent]
 })
