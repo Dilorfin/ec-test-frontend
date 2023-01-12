@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { OrderModel, OrderProductModel, OrderPaymentType, OrderDeliveryType } from 'src/app/services/backend-models/order.model';
 
 import { CartService, OrderedProduct } from 'src/app/services/cart.service';
@@ -23,10 +24,15 @@ export class CheckoutComponent
 	public novaposhtaWarehouses: NovaposhtaWarehouse[] = [];
 	public novaposhtaWarehouse?: NovaposhtaWarehouse;
 
-	constructor(private cartService: CartService, private orderService: OrderService,
-		private novaposhtaService: NovaposhtaService)
+	constructor(private router: Router, private cartService: CartService,
+		private orderService: OrderService, private novaposhtaService: NovaposhtaService)
 	{
 		this.products = this.cartService.getAll();
+
+		if (this.products.length <= 0)
+		{
+			this.router.navigate(['shopping-cart']);
+		}
 
 		this.total = this.products.map((product) => product.amount * product.model.price).reduce((a, b) => a + b);
 		this.order = {
@@ -71,10 +77,14 @@ export class CheckoutComponent
 			next: res =>
 			{
 				this.cartService.clear();
-				console.log(res);
-				if (res.invoice.url)
+
+				if (res.invoice && res.invoice.url)
 				{
 					window.location.href = res.invoice.url;
+				}
+				else
+				{
+					this.router.navigate(['order/' + res.orderId]);
 				}
 			},
 			error: error =>
