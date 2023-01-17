@@ -36,6 +36,7 @@ namespace ECommerceTest
 				cfg.CreateMap<InvoiceResultDTO, InvoiceResultModel>(); 
 				cfg.CreateMap<ProductDTO, ProductListModel>(); 
 				cfg.CreateMap<ProductDTO, ProductDetailedModel>();
+				cfg.CreateMap<ProductReviewDTO, ProductReviewModel>();
 
 				cfg.CreateMap<OrderCreateModel, OrderCreateDTO>()
 					.ReverseMap();
