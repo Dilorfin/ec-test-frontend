@@ -19,6 +19,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { OrderInfoComponent } from './order-info/order-info.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { NovaposhtaService } from '../services/novaposhta.service';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
 	declarations: [
@@ -35,6 +36,7 @@ import { NovaposhtaService } from '../services/novaposhta.service';
 		OrderListComponent
 	],
 	imports: [
+		SharedModule,
 		CommonModule,
 		FormsModule,
 		HttpClientModule,
