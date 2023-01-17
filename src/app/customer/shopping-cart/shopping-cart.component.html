@@ -5,6 +5,7 @@
 				<th scope="col">Image</th>
 				<th scope="col">Title</th>
 				<th scope="col">Amount</th>
+				<th scope="col">Cost per item</th>
 				<th scope="col">Actions</th>
 			</tr>
 		</thead>
@@ -22,6 +23,7 @@
 						<button class="btn btn-outline-dark" type="button"><i class="bi bi-plus"></i></button>
 					</div>
 				</td>
+				<td>{{product.model.price | uahCurrency}}</td>
 				<td>
 					<button class="btn btn-outline-dark" (click)="removeFromCart(i)">
 						<i class="bi bi-trash-fill"></i>

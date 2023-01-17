@@ -94,7 +94,7 @@
 							<div class="col-md-8">
 								<div class="card-body">
 									<h5 class="card-title">
-										{{product.model.title}} - {{product.amount}}x{{product.model.price}}₴
+										{{product.model.title}} - {{product.amount}}x{{product.model.price | uahCurrency}}
 									</h5>
 								</div>
 							</div>
@@ -102,7 +102,7 @@
 					</div>
 				</div>
 				<div class="pt-4">
-					<h4>Total: {{total}}₴</h4>
+					<h4>Total: {{total | uahCurrency}}</h4>
 					<a class="btn btn-outline-dark btn-lg w-100" (click)="placeOrder()">
 						{{order.payment.type == OrderPaymentType.Card ? "Go to payment" : "Confirm the order"}}
 					</a>
