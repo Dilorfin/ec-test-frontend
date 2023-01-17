@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductModel } from 'src/app/services/backend-models/product.model';
+import { ProductDetailedModel } from 'src/app/services/backend-models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductsService } from 'src/app/services/products.service';
 
@@ -11,7 +11,7 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class ProductDetailedComponent
 {
-	public product?: ProductModel;
+	public product?: ProductDetailedModel;
 	private productId: string;
 
 	public amount: number = 1;
@@ -25,7 +25,7 @@ export class ProductDetailedComponent
 	ngOnInit(): void
 	{
 		this.productsService.getDetailed(this.productId).subscribe({
-			next: (products: ProductModel) =>
+			next: (products: ProductDetailedModel) =>
 			{
 				this.product = products;
 			},

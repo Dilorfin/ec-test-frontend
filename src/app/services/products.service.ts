@@ -1,22 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ProductModel } from './backend-models/product.model';
-
-// TODO: wtf???
-export { ProductModel } from './backend-models/product.model';
+import { ProductListModel, ProductDetailedModel } from './backend-models/product.model';
 
 @Injectable()
 export class ProductsService
 {
 	constructor(private http: HttpClient) { }
 
-	public getList(): Observable<ProductModel[]>
+	public getList(): Observable<ProductListModel[]>
 	{
-		return this.http.get<ProductModel[]>("/api/products/list");
+		return this.http.get<ProductListModel[]>("/api/products/list");
 	}
-	public getDetailed(id: string): Observable<ProductModel>
+	public getDetailed(id: string): Observable<ProductDetailedModel>
 	{
-		return this.http.get<ProductModel>("/api/product/" + id);
+		return this.http.get<ProductDetailedModel>("/api/product/" + id);
 	}
 }

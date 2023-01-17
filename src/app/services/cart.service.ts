@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ProductModel } from './backend-models/product.model';
+import { ProductDetailedModel } from './backend-models/product.model';
 
 export type OrderedProduct = {
 	amount: number;
-	model: ProductModel;
+	model: ProductDetailedModel;
 }
 
 @Injectable({
