@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceTest.ThirdParty.Em
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceTest.BLL", "ECommerceTest.BLL\ECommerceTest.BLL.csproj", "{D22B6FAA-9ED8-449B-85FA-8FE05A0EBFA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceTest.ThirdParty.Delivery", "ECommerceTest.ThirdParty.NovaposhtaDelivery\ECommerceTest.ThirdParty.Delivery.csproj", "{3E895346-D04F-4478-87D4-449572887DBD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceTest.ThirdParty.Delivery", "ECommerceTest.ThirdParty.Delivery\ECommerceTest.ThirdParty.Delivery.csproj", "{3E895346-D04F-4478-87D4-449572887DBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
