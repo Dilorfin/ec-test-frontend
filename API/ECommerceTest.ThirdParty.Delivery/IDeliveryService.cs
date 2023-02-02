@@ -1,9 +1,8 @@
 using ECommerceTest.DAL.DTOs;
 
-namespace ECommerceTest.ThirdParty.Delivery
+namespace ECommerceTest.ThirdParty.Delivery;
+
+public interface IDeliveryService
 {
-	public interface IDeliveryService
-	{
-		public Task<bool> ValidateOrderDelivery(OrderDeliveryDTO deliveryDTO);
-	}
+	public Task<bool> ValidateOrderDelivery(OrderDeliveryDTO deliveryDTO);
 }

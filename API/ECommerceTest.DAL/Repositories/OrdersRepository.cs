@@ -1,23 +1,29 @@
 using ECommerceTest.DAL.DTOs;
 using ECommerceTest.DAL.IRepositories;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace ECommerceTest.DAL.Repositories;
 
 public class OrdersRepository : Repository, IOrdersRepository
 {
-	public OrdersRepository()
-		: base("db", "orders")
-	{ }
+	private readonly IMongoCollection<OrderDTO> _collection;
 
-	public async Task<Guid?> Create(OrderCreateDTO orderCreateDTO)
+	public OrdersRepository()
 	{
-		var orderDTO = new OrderDTO(
-			Guid.NewGuid(),
-			orderCreateDTO.payment,
-			orderCreateDTO.delivery,
-			orderCreateDTO.products
-		);
-		var result = await Container.CreateItemAsync(orderDTO);
-		return result.Resource.id;
+		_collection = Database.GetCollection<OrderDTO>("orders");
+	}
+
+	public async Task<string> Create(OrderCreateDTO orderCreateDTO)
+	{
+		var orderDTO = new OrderDTO()
+		{
+			Id = ObjectId.GenerateNewId(),
+			Payment = orderCreateDTO.payment,
+			Delivery = orderCreateDTO.delivery,
+			Products = orderCreateDTO.products
+		};
+		await _collection.InsertOneAsync(orderDTO);
+		return orderDTO.Id.ToString();
 	}
 }

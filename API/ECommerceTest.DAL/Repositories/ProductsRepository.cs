@@ -1,42 +1,43 @@
 using ECommerceTest.DAL.DTOs;
 using ECommerceTest.DAL.IRepositories;
-using Microsoft.Azure.Cosmos.Linq;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace ECommerceTest.DAL.Repositories;
 
 public class ProductsRepository : Repository, IProductsRepository
 {
+	private readonly IMongoCollection<ProductDTO> _collection;
+
 	public ProductsRepository()
-		: base("db", "products")
-	{ }
+	{
+		_collection = Database.GetCollection<ProductDTO>("products");
+	}
 
 	public async Task<ProductDTO> GetProductAsync(string id)
 	{
-		string query = $@"SELECT * FROM products WHERE products.id = '{id}'";
-		var iterator = Container.GetItemQueryIterator<ProductDTO>(query);
-		var matches = new List<ProductDTO>();
-		while (iterator.HasMoreResults)
+		var filter = Builders<ProductDTO>.Filter.Eq("_id", ObjectId.Parse(id));
+
+		var objects = await _collection.FindAsync(filter);
+		var list = await objects.ToListAsync();
+		if (list.Count > 1)
 		{
-			var next = await iterator.ReadNextAsync();
-			matches.AddRange(next);
+			throw new Exception($"Collection contain more then one _id=\"{id}\"");
 		}
-		return matches.SingleOrDefault();
+		return list.FirstOrDefault();
 	}
 
 	public async Task<IEnumerable<ProductDTO>> GetProductsAsync(uint offset, uint count)
 	{
-		var iterator = Container.GetItemLinqQueryable<ProductDTO>()
-		   .Skip((int)offset)
-		   .Take((int)count)
-		   .ToFeedIterator();
+		return _collection.AsQueryable().Skip((int)offset).Take((int)count).ToList();
+	}
 
-		List<ProductDTO> list = new List<ProductDTO>();
-		while (iterator.HasMoreResults)
-		{
-			var next = await iterator.ReadNextAsync();
-			list.AddRange(next);
-		}
+	public async Task<bool> DecreaseProductAmountAsync(string id)
+	{
+		var update = Builders<ProductDTO>.Update.Inc("amount", -1);
+		var filter = Builders<ProductDTO>.Filter.Eq("_id", id);
 
-		return list;
+		UpdateResult result = await _collection.UpdateOneAsync(filter, update);
+		return result.ModifiedCount == 1;
 	}
 }

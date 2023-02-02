@@ -4,5 +4,5 @@ namespace ECommerceTest.DAL.IRepositories;
 
 public interface IOrdersRepository
 {
-	Task<Guid?> Create(OrderCreateDTO orderCreateDTO);
+	Task<string> Create(OrderCreateDTO orderCreateDTO);
 }

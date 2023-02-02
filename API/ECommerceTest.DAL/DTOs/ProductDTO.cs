@@ -1,20 +1,34 @@
-using Newtonsoft.Json;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace ECommerceTest.DAL.DTOs;
 
-public record ProductReviewDTO(
-	[JsonProperty("id")] string Id,
-	[JsonProperty("date")] string Date,
-	[JsonProperty("userId")] string UserId,
-	[JsonProperty("text")] string Text
-);
+public class ProductReviewDTO
+{
+	[BsonId]
+	public ObjectId Id { get; set; }
+	[BsonElement("date")]
+	public string Date { get; set; }
+	[BsonElement("userId")]
+	public string UserId { get; set; }
+	[BsonElement("text")]
+	public string Text { get; set; }
+};
 
-public record ProductDTO(
-	[JsonProperty("id")] string Id,
-	[JsonProperty("title")] string Title,
-	[JsonProperty("description")] string Description,
-	[JsonProperty("imageUrl")] string ImageUrl,
-	[JsonProperty("price")] long Price,
-	[JsonProperty("amount")] uint Amount,
-	[JsonProperty("reviews")] ProductReviewDTO[] Reviews
-);
+public class ProductDTO
+{
+	[BsonId]
+	public ObjectId Id { get; set; }
+	[BsonElement("title")]
+	public string Title { get; set; }
+	[BsonElement("description")]
+	public string Description { get; set; }
+	[BsonElement("imageUrl")]
+	public string ImageUrl { get; set; }
+	[BsonElement("price")]
+	public long Price { get; set; }
+	[BsonElement("amount")]
+	public uint Amount { get; set; }
+	[BsonElement("reviews")]
+	public ObjectId[] Reviews { get; set; }
+};

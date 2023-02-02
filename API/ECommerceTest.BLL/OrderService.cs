@@ -28,8 +28,8 @@ public class OrderService : IOrderService
 		if (!await ValidateOrder(order))
 			return new OrderCreateResultDTO(null, null);
 
-		Guid? orderId = await _ordersRepository.Create(order);
-		if (!orderId.HasValue)
+		var orderId = await _ordersRepository.Create(order);
+		if (string.IsNullOrEmpty(orderId))
 			return new OrderCreateResultDTO(null, null);
 
 		InvoiceResultDTO invoice = null;
@@ -52,6 +52,6 @@ public class OrderService : IOrderService
 			return new NovaposhtaDeliveryService();
 		}
 
-		return null;
+		return new PickupDeliveryService();
 	}
 }

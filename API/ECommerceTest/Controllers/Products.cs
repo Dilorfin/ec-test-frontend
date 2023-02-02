@@ -1,14 +1,14 @@
 using AutoMapper;
-using ECommerceTest.Common;
 using ECommerceTest.DAL.IRepositories;
 using ECommerceTest.Models.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace ECommerceTest.Controllers
 {
@@ -23,13 +23,13 @@ namespace ECommerceTest.Controllers
 			_productsRepository = productsRepository;
 		}
 
-		[FunctionName("Test")]
+		/*[FunctionName("Test")]
 		public async Task<IActionResult> Test(
 			[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "test")] HttpRequest req,
 			ILogger log)
 		{
 			return new OkObjectResult(AzureAuthUtils.GetAzureUserFromRequest(req));
-		}
+		}*/
 
 		[FunctionName("GetProductDetails")]
 		public async Task<IActionResult> GetProductDetails(
@@ -47,10 +47,17 @@ namespace ECommerceTest.Controllers
 		{
 			//string offset = req.Query["offset"];
 			//string count = req.Query["count"];
-			
-			var productDTOs = await _productsRepository.GetProductsAsync(0, 25);
-			var products = _mapper.Map<IEnumerable<ProductListModel>>(productDTOs);
-			return new OkObjectResult(products);
+			try
+			{
+
+				var productDTOs = await _productsRepository.GetProductsAsync(0, 25);
+				var products = _mapper.Map<IEnumerable<ProductListModel>>(productDTOs);
+				return new OkObjectResult(products);
+			}
+			catch (Exception ex)
+			{
+				return new ExceptionResult(ex, true);
+			}
 		}
 	}
 }

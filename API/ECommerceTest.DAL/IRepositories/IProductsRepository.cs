@@ -7,4 +7,6 @@ public interface IProductsRepository
 	Task<ProductDTO> GetProductAsync(string id);
 
 	Task<IEnumerable<ProductDTO>> GetProductsAsync(uint offset, uint count);
+
+	Task<bool> DecreaseProductAmountAsync(string id);
 }

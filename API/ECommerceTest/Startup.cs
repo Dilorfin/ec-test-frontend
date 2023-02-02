@@ -21,10 +21,6 @@ namespace ECommerceTest
 	{
 		public override void Configure(IFunctionsHostBuilder builder)
 		{
-			/*builder.Services.AddSingleton<IMyService>((s) => {
-				return new MyService();
-			});*/
-			
 			builder.Services.AddScoped<IPaymentService, MonobankPaymentService>();
 			builder.Services.AddScoped<IOrderService, OrderService>();
 

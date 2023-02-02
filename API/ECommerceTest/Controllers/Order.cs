@@ -35,13 +35,12 @@ namespace ECommerceTest.Controllers
 			OrderCreateDTO orderDTO = _mapper.Map<OrderCreateDTO>(order);
 			OrderCreateResultDTO result = await _orderService.CreateOrder(orderDTO);
 
-			if (result.orderId.HasValue)
+			if (string.IsNullOrEmpty(result.orderId))
 			{
-				return new OkObjectResult(result);
+				return new BadRequestResult();
 			}
 
-			return new BadRequestResult();
+			return new OkObjectResult(result);
 		}
-
 	}
 }
